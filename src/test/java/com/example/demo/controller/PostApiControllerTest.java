@@ -56,7 +56,7 @@ public class PostApiControllerTest {
 
         String url = "http://localhost:" + port + "/api/v1/posts";
 
-        /*todo: Long 타입 MessageConverter가 없다고 아래 테스트 계속 실패함*/
+
         //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
 
