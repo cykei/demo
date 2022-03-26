@@ -1,6 +1,7 @@
 package com.example.demo.config.auth;
 
 import com.example.demo.config.auth.dto.OAuthAttributes;
+import com.example.demo.config.auth.dto.SessionUser;
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oauth2User = delegate.loadUser(userRequest);
 
-        String registrationId=userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName=userRequest.getClientRegistration().getProviderDetails()
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oauth2User.getAttributes());
