@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Taco Cloud</title>
+  <style>
+    .row.content {height: 800px}
+    #info-box {
+      display:none;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 1;
+      background-color: #ffffff;
+      border: 2px solid #BF0A30;
+      border-radius: 5px;
+      padding: 5px;
+      font-family: arial;
+    }
+  </style>
+  <script>
+    [].forEach.call(document.querySelectorAll('path.OUTLINE'), function(item) {
+      item.addEventListener('mouseenter', function() {
+        $('#info-box').css('display','block');
+        document.getElementById('info-box').innerHTML=this.getAttribute("title")
+      });
+      item.addEventListener('mouseleave', function(){
+        $('#info-box').css('display','none');
+      });
+    })
+    $(document).mousemove(function(e) {
+      $('#info-box').css('top',e.pageY-200);
+      $('#info-box').css('left',e.pageX-($('#info-box').width())/2-150);
+    }).mouseover();
+  </script>
+  </head>
+  <body>
+  <div data-include-path="map/Republic_Korea_2019.html.html"></div>
+
+  <script>
+
+    window.addEventListener('load', function() {
+      var allElements = document.getElementsByTagName('*');
+      Array.prototype.forEach.call(allElements, function(el) {
+        var includePath = el.dataset.includePath;
+        if (includePath) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              el.outerHTML = this.responseText;
+            }
+          };
+          xhttp.open('GET', includePath, true);
+          xhttp.send();
+        }
+      });
+    });
+
+  </script>
+   <div class="row content" />
+   <div id="info-box" />
+  </body>
+</html>
