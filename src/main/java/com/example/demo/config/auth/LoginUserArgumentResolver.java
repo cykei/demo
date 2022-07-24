@@ -14,10 +14,14 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Component
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
+    // @LoginUser 를 사용한 함수에 넣어줄 실제 객체를 구현하는 리졸버 클래스
+
     private final HttpSession httpSession;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
+        // 컨트롤러 메서드가 특정 파라미터를 지원하는지 판단
+        // 여기서는 컨트롤러 메서드의 파라미터에 @LoginUser 가 붙어있고, 파라미터 클래스 타입이 SessionUser.class 인 경우 true를 반환
         boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null;
         boolean isUserClass = SessionUser.class.equals(parameter.getParameterType());
         return isLoginUserAnnotation && isUserClass;
@@ -25,6 +29,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        // 파라미터에 전달할 객체를 새성
+        // 여기서는 세션에거 객체를 가져온다.
         return httpSession.getAttribute("user");
     }
 
